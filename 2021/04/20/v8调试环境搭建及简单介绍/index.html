@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="fa1lr4in">
+    
+    <title>
+        
+            v8调试环境搭建及简单介绍 |
+        
+        fa1lr4in&#39;s blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"fa1lr4in.github.io","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"每天都要进步吖~"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                fa1lr4in&#39;s blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">v8调试环境搭建及简单介绍</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">fa1lr4in</span>
+                        
+                            <span class="author-label">Lv1</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2021-04-20 17:57:29</span>
+        <span class="mobile">2021-04-20 17:57</span>
+    </span>
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>2.5k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>11 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="ubuntu-v8调试环境搭建"><a href="#ubuntu-v8调试环境搭建" class="headerlink" title="ubuntu v8调试环境搭建"></a>ubuntu v8调试环境搭建</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本篇文章的环境为ubuntu1804，写这篇文章的目的就是从一个初学者的角度来总结下环境搭建的流程，方便在其他机器搭建调试环境时省一些不必要的力气。我会尽量简洁明了的描述这个环境搭建流程，让我们开始吧。</p>
+<p>首先分享下个人目录结构如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~<span class="comment"># ls</span></span><br><span class="line">tools  v8  桌面</span><br><span class="line">root@ubuntu:~<span class="comment"># ls tools/</span></span><br><span class="line">depot_tools  ninja  Trojan-Qt5-Linux.AppImage</span><br><span class="line">root@ubuntu:~<span class="comment"># ls  v8/</span></span><br><span class="line">v8</span><br><span class="line">root@ubuntu:~<span class="comment"># ls v8/v8/</span></span><br><span class="line">AUTHORS   build_overrides      COMMON_OWNERS  docs               infra         LICENSE.fdlibm      out         PRESUBMIT.py  samples  third_party</span><br><span class="line">base      buildtools           custom_deps    ENG_REVIEW_OWNERS  INFRA_OWNERS  LICENSE.strongtalk  out.gn      README.md     src      tools</span><br><span class="line">build     CODE_OF_CONDUCT.md   DEPS           gni                INTL_OWNERS   LICENSE.v8          OWNERS      RISCV_OWNERS  <span class="built_in">test</span>     WATCHLISTS</span><br><span class="line">BUILD.gn  codereview.settings  DIR_METADATA   include            LICENSE       MIPS_OWNERS         PPC_OWNERS  S390_OWNERS   testing</span><br></pre></td></tr></table></figure>
+
+<p>tools里面配置了各个工具，包括depot_tools，ninja等</p>
+<p>v8是v8项目的目录，我直接在/root/v8中进行fetch v8</p>
+<p>安装v8一需要google的depot_tools工具，二需要一款稳定的代理</p>
+<p>下面的代码中，如果上面是vi命令，下面注释的部分就是在vi的文件中要修改的部分</p>
+<h2 id="Ubuntu环境配置"><a href="#Ubuntu环境配置" class="headerlink" title="Ubuntu环境配置"></a>Ubuntu环境配置</h2><p>1、允许root登录并进行ubuntu初始修改</p>
+<p>2、配置linux全局代理，使终端可以访问墙外的v8编译相关资源</p>
+<p>比如qv2ray，相关链接：<a class="link"   target="_blank" rel="noopener" href="https://www.zsxcool.com/7137.html" >https://www.zsxcool.com/7137.html<i class="fas fa-external-link-alt"></i></a></p>
+<p>再比如Trojan-QT5，相关链接：<a class="link"   target="_blank" rel="noopener" href="https://github.com/Shadowsocks-Wiki/shadowsocks/blob/master/zh_CN/trojan/ubuntu-trojan-qt5-setup-guide.md" >https://github.com/Shadowsocks-Wiki/shadowsocks/blob/master/zh_CN/trojan/ubuntu-trojan-qt5-setup-guide.md<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd root</span><br><span class="line">cp /home/ubuntu/.bashrc /root/</span><br><span class="line">apt update &amp;&amp; apt install ssh vim python python2.7 git libproxy-tools</span><br><span class="line">vi /etc/ssh/sshd_config			<span class="comment">#修改 PermitRootLogin yes</span></span><br><span class="line">vi /etc/pam.d/gdm-autologin		<span class="comment">#注释auth   required        pam_succeed_if.so user != root quiet_success</span></span><br><span class="line">vi /etc/pam.d/gdm-password		<span class="comment">#注释auth   required        pam_succeed_if.so user != root quiet_success</span></span><br><span class="line">vi /root/.profile			    <span class="comment">#改成 tty -s &amp;&amp; mesg n || true</span></span><br><span class="line">ln -s /usr/bin/python2 /usr/bin/python</span><br><span class="line">vi /root/.gitconfig</span><br><span class="line"><span class="comment">#[http]</span></span><br><span class="line"><span class="comment">#       proxy = http://127.0.0.1:58591		#socks5://127.0.0.1:51837</span></span><br><span class="line"><span class="comment">#[https]</span></span><br><span class="line"><span class="comment">#       proxy = http://127.0.0.1:58591</span></span><br><span class="line">vi /etc/profile</span><br><span class="line"><span class="comment">#export http_proxy=&quot;http://127.0.0.1:58591&quot;</span></span><br><span class="line"><span class="comment">#export sock5_proxy=&quot;sock5://127.0.0.1:51837&quot;</span></span><br><span class="line">vi ~/.bashrc或者vi ~/.zshrc</span><br><span class="line"><span class="comment">#export http_proxy=&quot;http://127.0.0.1:58591&quot;</span></span><br><span class="line"><span class="comment">#export sock5_proxy=&quot;sock5://127.0.0.1:51837&quot;</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc或者<span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="v8环境配置"><a href="#v8环境配置" class="headerlink" title="v8环境配置"></a>v8环境配置</h2><p>下载depot_tools，v8并进行编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">mkdir /root/tools/depot_tools</span><br><span class="line">git <span class="built_in">clone</span> https://chromium.googlesource.com/chromium/tools/depot_tools.git /root/tools/depot_tools</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=$PATH:&quot;/root/tools/depot_tools&quot;&#x27;</span> &gt;&gt; /etc/profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=$PATH:&quot;/root/tools/depot_tools&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line">apt install re2c g++</span><br><span class="line"><span class="built_in">cd</span> /root/tools</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/ninja-build/ninja.git</span><br><span class="line"><span class="built_in">cd</span> ninja &amp;&amp; ./configure.py --bootstrap &amp;&amp; <span class="built_in">cd</span> ..</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=$PATH:&quot;/root/tools/ninja&quot;&#x27;</span> &gt;&gt; /etc/profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=$PATH:&quot;/root/tools/ninja&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line">mkdir /root/tools/.boto</span><br><span class="line">vi .boto</span><br><span class="line"><span class="comment">#[Boto]</span></span><br><span class="line"><span class="comment">#debug = 0</span></span><br><span class="line"><span class="comment">#num_retries = 10</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment">#proxy = 127.0.0.1</span></span><br><span class="line"><span class="comment">#proxy_port = 58591</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export NO_AUTH_BOTO_CONFIG=&quot;/root/tools/.boto&quot;&#x27;</span> &gt;&gt; /etc/profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export NO_AUTH_BOTO_CONFIG=&quot;/root/tools/.boto&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc或者<span class="built_in">source</span> ~/.zshrc</span><br><span class="line">mkdir /root/v8</span><br><span class="line"><span class="built_in">cd</span> /root/v8</span><br><span class="line">fetch v8						 	  <span class="comment">#这个可能会花很长时间，取决于个人的网络环境，如果中断了则 gclient sync同步</span></span><br><span class="line"><span class="built_in">cd</span> v8</span><br><span class="line"><span class="comment">#git reset --hard [commit hash]			#切换版本，后面跟上commit的hash值，可选</span></span><br><span class="line"><span class="comment">#gclient sync</span></span><br><span class="line">sudo ./build/install-build-deps.sh --no-chromeos-fonts			<span class="comment">#在linux系统中这个命令是需要的</span></span><br><span class="line">git pull &amp;&amp; gclient sync  <span class="comment">#同步更新</span></span><br><span class="line">tools/dev/gm.py arm64.debug <span class="comment"># 编译 debug 版本			编译的过程可能会花上比较长的时间</span></span><br><span class="line">tools/dev/gm.py ia32.debug </span><br><span class="line">tools/dev/gm.py x64.debug </span><br><span class="line">tools/dev/gm.py arm.debug </span><br><span class="line">tools/dev/gm.py x64.release <span class="comment"># 编译 release 版本</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a class="link"   target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-252812-1.htm" >https://bbs.pediy.com/thread-252812-1.htm<i class="fas fa-external-link-alt"></i></a></p>
+<p><a href="browser-pwn-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.pdf">browser-pwn-基础知识.pdf</a> </p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://7o8v.me/2019/10/30/V8%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" >https://7o8v.me/2019/10/30/V8%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="过程中遇到的问题"><a href="#过程中遇到的问题" class="headerlink" title="过程中遇到的问题"></a>过程中遇到的问题</h3><p>1、running depot tools as root is sad</p>
+<p>进入到depot_tools目录，vim update_depot_tools 文件，注释掉</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="string">&quot;<span class="variable">$USER</span>&quot;</span> == <span class="string">&quot;root&quot;</span>)</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> running depot tools as root is sad </span><br><span class="line">  <span class="built_in">exit</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>2、遇到 NOTICE: You have PROXY values set in your environment, but gsutilin depot_tools does not (yet) obey them.<br>Also, –no_auth prevents the normal BOTO_CONFIG environmentvariable from being used.<br>To use a proxy in this situation, please supply those settingsin a .boto file pointed to by the NO_AUTH_BOTO_CONFIG environmentvariable.</p>
+<p>缺少代理的环境变量，首先新建一个<code>.boto</code>的文件，比方说放到<code>/home/[user]/.boto</code>（当然，user改成你的用户名），里面写</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Boto]``debug ``=` `0``num_retries ``=` `10` `proxy ``=` `[proxy ip]``proxy_port ``=` `[proxy port]</span><br></pre></td></tr></table></figure>
+
+<p>其中IP和port改成自己的http代理，跟前面的同理。</p>
+<p>然后在<code>~/.bashrc</code>最后面加上<code>export NO_AUTH_BOTO_CONFIG=&quot;/home/[user]/.boto&quot;</code>，然后重启一下bash或者<code>source ~/.bashrc</code>加载环境变量。</p>
+<p>3、Failed to download <a class="link"   target="_blank" rel="noopener" href="https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/43a87bbebccad99325fdcf34166295b121ee15c7/debian_sid_amd64_sysroot.tar.xz" >https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/43a87bbebccad99325fdcf34166295b121ee15c7/debian_sid_amd64_sysroot.tar.xz<i class="fas fa-external-link-alt"></i></a><br>Error: Command ‘vpython build/linux/sysroot_scripts/install-sysroot.py –arch=x64’ returned non-zero exit status 1 in /root/v8/v8</p>
+<p>出现这种问题是因为网络原因，可以重新进行gclient sync或更换代理服务器</p>
+<h2 id="turbolizer环境配置"><a href="#turbolizer环境配置" class="headerlink" title="turbolizer环境配置"></a>turbolizer环境配置</h2><p>首先，Ubuntu下默认的apt里面的nodejs不好使，必须得<a class="link"   target="_blank" rel="noopener" href="https://tecadmin.net/install-latest-nodejs-npm-on-ubuntu/" >安装最新版的<i class="fas fa-external-link-alt"></i></a>：</p>
+<p>不需要再安装github v8 tools里面的turbolizer，因为编译完成v8之后，tools文件夹中已经有相应的工具，不过也可以自行安装</p>
+<p><del>然后安装并启动turbolizer，turbolizer项目地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/v8/tools" >https://github.com/v8/tools<i class="fas fa-external-link-alt"></i></a></del></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd v8/tools/turbolizer</span><br><span class="line">npm i</span><br><span class="line">npm run-script build</span><br><span class="line">python -m SimpleHTTPServer 8001</span><br></pre></td></tr></table></figure>
+
+<p>接着用chrome浏览器访问<code>ip:8001</code>就能用了，这时访问是没有数据的，我们需要生成json格式的过程文件，命令如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./d8 test_jscode/d8_poc.js --allow-natives-syntax --trace-turbo</span><br></pre></td></tr></table></figure>
+
+<p>执行后就可以生成相应的json文件。</p>
+<h2 id="v8调试"><a href="#v8调试" class="headerlink" title="v8调试"></a>v8调试</h2><h3 id="配置pip国内源以及pwndbg"><a href="#配置pip国内源以及pwndbg" class="headerlink" title="配置pip国内源以及pwndbg"></a>配置pip国内源以及pwndbg</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/.pip</span><br><span class="line">vi ~/.pip/pip.conf</span><br><span class="line"><span class="comment">#[global]</span></span><br><span class="line"><span class="comment">#index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span></span><br><span class="line"><span class="built_in">cd</span> /root/tools</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/pwndbg/pwndbg</span><br><span class="line"><span class="built_in">cd</span> pwndbg</span><br><span class="line">./setup.sh				<span class="comment">#如果安装过程中哪步卡住或失败，可以手动执行命令，并将命令对应的行注释</span></span><br><span class="line">vi  ~/.gdbinit			<span class="comment">#该文件中存放gdb初始运行前要执行的命令</span></span><br><span class="line"><span class="comment">#添加一行指令，该指令可以可视化的显示</span></span><br><span class="line"><span class="built_in">source</span> /root/v8/v8/tools/gdbinit				<span class="comment">#指定的文件在v8目录下的tools/gdbinit</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="v8简单调试技巧"><a href="#v8简单调试技巧" class="headerlink" title="v8简单调试技巧"></a>v8简单调试技巧</h3><p>gdb调试支持如下：<a class="link"   target="_blank" rel="noopener" href="https://gist.github.com/totherik/3a4432f26eea1224ceeb" >https://gist.github.com/totherik/3a4432f26eea1224ceeb<i class="fas fa-external-link-alt"></i></a></p>
+<p>1、创建test_jscode/hello.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>,<span class="number">1.1</span>];</span><br><span class="line">%DebugPrint(a);					<span class="comment">//输出a对象的结构</span></span><br><span class="line">%SystemBreak();					<span class="comment">//下断点</span></span><br></pre></td></tr></table></figure>
+
+<p>2、打开gdb并指定选项</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gdb d8</span><br><span class="line"><span class="built_in">set</span> args --allow-natives-syntax test_jscode/hello.js</span><br><span class="line">r</span><br></pre></td></tr></table></figure>
+
+<p>部分执行结果如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~/v8/v8/out/x64.debug# gdb d8</span><br><span class="line">...</span><br><span class="line">This GDB was configured as &quot;x86_64-linux-gnu&quot;.</span><br><span class="line">...</span><br><span class="line">pwndbg&gt; set args --allow-natives-syntax test_jscode/hello.js</span><br><span class="line">pwndbg&gt; r</span><br><span class="line">...</span><br><span class="line">[New Thread 0x7f821b8f4700 (LWP 2844)]</span><br><span class="line">[New Thread 0x7f821b0f3700 (LWP 2845)]</span><br><span class="line">[New Thread 0x7f821a8f2700 (LWP 2846)]</span><br><span class="line">DebugPrint: 0x103408148989: [JSArray]</span><br><span class="line"> - map: 0x103408303ae1 &lt;Map(PACKED_DOUBLE_ELEMENTS)&gt; [FastProperties]</span><br><span class="line"> - prototype: 0x1034082cbba1 &lt;JSArray[0]&gt;</span><br><span class="line"> - elements: 0x103408148961 &lt;FixedDoubleArray[4]&gt; [PACKED_DOUBLE_ELEM                                                                                                ENTS]</span><br><span class="line"> - length: 4</span><br><span class="line"> - properties: 0x10340804222d &lt;FixedArray[0]&gt;</span><br><span class="line"> - All own properties (excluding elements): &#123;</span><br><span class="line">    0x1034080446d5: [String] in ReadOnlySpace: #length: 0x10340824215                                                                                                d &lt;AccessorInfo&gt; (const accessor descriptor), location: descriptor</span><br><span class="line"> &#125;</span><br><span class="line"> - elements: 0x103408148961 &lt;FixedDoubleArray[4]&gt; &#123;</span><br><span class="line">           0: 1</span><br><span class="line">           1: 2</span><br><span class="line">           2: 3</span><br><span class="line">           3: 1.1</span><br><span class="line"> &#125;</span><br><span class="line">...</span><br><span class="line">──────────────────────────────[ STACK ]──────────────────────────────</span><br><span class="line">00:0000│ rbp rsp 0x7ffcdedd2030 —▸ 0x7ffcdedd20a0 —▸ 0x7ffcdedd2110 —                                                                                                ▸ 0x7ffcdedd2130 —▸ 0x7ffcdedd2170 ◂— ...</span><br><span class="line">01:0008│         0x7ffcdedd2038 —▸ 0x7f82206bd23d ◂— mov    rsi, qwor                                                                                                d ptr [rbp - 0x20]</span><br><span class="line">02:0010│         0x7ffcdedd2040 ◂— 0x100103400000000</span><br><span class="line">03:0018│         0x7ffcdedd2048 —▸ 0x7f821e7dcd63 ◂— &#x27;length_ &gt;= 0&#x27;</span><br><span class="line">04:0020│         0x7ffcdedd2050 ◂— 0x21643d78 /* &#x27;x=d!&#x27; */</span><br><span class="line">05:0028│         0x7ffcdedd2058 ◂— 0x0</span><br><span class="line">06:0030│         0x7ffcdedd2060 ◂— 0x0</span><br><span class="line">07:0038│         0x7ffcdedd2068 —▸ 0x103400000000 —▸ 0x7ffcdedd3a98 ◂                                                                                                — 0x103400000000</span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>3、可以用job和telescope查看具体的数据结构或者数据的详细信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; job 0x103408148989</span><br><span class="line">0x103408148989: [JSArray]</span><br><span class="line"> - map: 0x103408303ae1 &lt;Map(PACKED_DOUBLE_ELEMENTS)&gt; [FastProperties]</span><br><span class="line"> - prototype: 0x1034082cbba1 &lt;JSArray[0]&gt;</span><br><span class="line"> - elements: 0x103408148961 &lt;FixedDoubleArray[4]&gt; [PACKED_DOUBLE_ELEMENTS]</span><br><span class="line"> - length: 4</span><br><span class="line"> - properties: 0x10340804222d &lt;FixedArray[0]&gt;</span><br><span class="line"> - All own properties (excluding elements): &#123;</span><br><span class="line">    0x1034080446d5: [String] in ReadOnlySpace: #length: 0x10340824215d &lt;AccessorInfo&gt; (const accessor descriptor), location: descriptor</span><br><span class="line"> &#125;</span><br><span class="line"> - elements: 0x103408148961 &lt;FixedDoubleArray[4]&gt; &#123;</span><br><span class="line">           0: 1</span><br><span class="line">           1: 2</span><br><span class="line">           2: 3</span><br><span class="line">           3: 1.1</span><br><span class="line"> &#125;</span><br><span class="line">pwndbg&gt; job 0x103408148961</span><br><span class="line">0x103408148961: [FixedDoubleArray]</span><br><span class="line"> - map: 0x103408042a95 &lt;Map&gt;</span><br><span class="line"> - length: 4</span><br><span class="line">           0: 1</span><br><span class="line">           1: 2</span><br><span class="line">           2: 3</span><br><span class="line">           3: 1.1</span><br><span class="line">pwndbg&gt; telescope 0x103408148988</span><br><span class="line">00:0000│  0x103408148988 ◂— 0x804222d08303ae1</span><br><span class="line">01:0008│  0x103408148990 ◂— 0x808148961</span><br><span class="line">02:0010│  0x103408148998 ◂— 0xbeadbeefbeadbeef</span><br><span class="line">pwndbg&gt; telescope 0x103408148960</span><br><span class="line">00:0000│  0x103408148960 ◂— 0x808042a95</span><br><span class="line">01:0008│  0x103408148968 ◂— 0x3ff0000000000000</span><br><span class="line">02:0010│  0x103408148970 ◂— 0x4000000000000000</span><br><span class="line">03:0018│  0x103408148978 ◂— 0x4008000000000000</span><br><span class="line">04:0020│  0x103408148980 ◂— 0x3ff199999999999a</span><br><span class="line">05:0028│  0x103408148988 ◂— 0x804222d08303ae1</span><br><span class="line">06:0030│  0x103408148990 ◂— 0x808148961</span><br><span class="line">07:0038│  0x103408148998 ◂— 0xbeadbeefbeadbeef</span><br></pre></td></tr></table></figure>
+
+<p>v8因为地址都是⼋字节对⻬，所以最低的三位必然都是0，如果将其空置必然会造成浪费，所以可以用最低位来表示数据，当表示为指针的时候最低为就为1，这样表示出来的结果会比真实地址+1。（v8在内存中只有数字和对象两种表示。为了区分两者，v8在所有对象的内存地址末尾都加了1，以便表示它是个对象。）</p>
+<p>这种八字节对齐而将低三位存储flag数据的应用场景还是蛮多的，节省了不必要的空间。</p>
+<h2 id="v8的数据结构"><a href="#v8的数据结构" class="headerlink" title="v8的数据结构"></a>v8的数据结构</h2><p>和vb等语言的解析类似，JavaScript是一种解释执行语言，v8本质上是一个JavaScript的解释执行程序。</p>
+<p>首先，需要了解v8解析执行JavaScript语句的基本流程：v8在读取js语句后，首先将这一条语句解析为语法树，然后通过解释器将语法树变为中间语言的Bytecode字节码，最后利用内部虚拟机将字节码转换为机器码来执行。</p>
+<p>为了加快解析过程，v8会记录下某条语法树的执行次数，当v8发现某条语法树执行次数超过一定阀值后，就会将这段语法树直接转换为机器码。后续再调用这条js语句时，v8会直接调用这条语法树对应的机器码，而不用再转换为ByteCode字节码，这样就大大加快了执行速度。这就是著名的JIT优化。</p>
+<p>这样的性能优化，虽然加快了程序的执行，但也带了很多安全问题。如果v8本来通过JIT引擎为某段语法树比如a+b加法计算生成了一段机器码<code>add eax,ebx</code>，而在后续某个时刻，攻击者在js引擎中突然改变了a和b的对象类型，而JIT引擎并没有识别出来这个改变，这就造成了a和b对象在加法运算时的类型混淆。</p>
+<p>熟悉了v8的解析过程，我们再来看一下v8中的对象结构。以上面的数组对象b为例，通过job命令可以看到一个对象在内存中布局大致如下所示：</p>
+<table>
+<thead>
+<tr>
+<th align="center">map</th>
+<th align="center">表明了一个对象的类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">prototype</td>
+<td align="center">prototype</td>
+</tr>
+<tr>
+<td align="center">elements</td>
+<td align="center">对象元素</td>
+</tr>
+<tr>
+<td align="center">length</td>
+<td align="center">元素个数</td>
+</tr>
+<tr>
+<td align="center">properties</td>
+<td align="center">属性</td>
+</tr>
+</tbody></table>
+<p>细心的童鞋可以发现，数组对象的elements其实也是个对象，这些元素在内存中的分布正好位于数组对象的上方，即低地址处：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; job 0x103408148989</span><br><span class="line">0x103408148989: [JSArray]</span><br><span class="line"> - map: 0x103408303ae1 &lt;Map(PACKED_DOUBLE_ELEMENTS)&gt; [FastProperties]</span><br><span class="line"> - prototype: 0x1034082cbba1 &lt;JSArray[0]&gt;</span><br><span class="line"> - elements: 0x103408148961 &lt;FixedDoubleArray[4]&gt; [PACKED_DOUBLE_ELEMENTS]</span><br><span class="line"> - length: 4</span><br><span class="line"> - properties: 0x10340804222d &lt;FixedArray[0]&gt;</span><br><span class="line"> - All own properties (excluding elements): &#123;</span><br><span class="line">    0x1034080446d5: [String] <span class="keyword">in</span> ReadOnlySpace: <span class="comment">#length: 0x10340824215d &lt;AccessorInfo&gt; (const accessor descriptor), location: descriptor</span></span><br><span class="line"> &#125;</span><br><span class="line"> - elements: 0x103408148961 &lt;FixedDoubleArray[4]&gt; &#123;</span><br><span class="line">           0: 1</span><br><span class="line">           1: 2</span><br><span class="line">           2: 3</span><br><span class="line">           3: 1.1</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/04/21/starctf2019-oob/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">starctf2019-oob</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script 
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script >
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: 'oP8c99sduOuJjyeVoKafuweh-gzGzoHsz',
+                    appKey: 'TwXXvHbKxF0DVsXV22S2uRVG',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '欢迎大家吐槽~',
+                    lang: 'en'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'fa1lr4in';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('false') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">fa1lr4in</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ubuntu-v8%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">ubuntu v8调试环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">Ubuntu环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">v8环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">过程中遇到的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#turbolizer%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">turbolizer环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v8%E8%B0%83%E8%AF%95"><span class="nav-text">v8调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEpip%E5%9B%BD%E5%86%85%E6%BA%90%E4%BB%A5%E5%8F%8Apwndbg"><span class="nav-text">配置pip国内源以及pwndbg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v8%E7%AE%80%E5%8D%95%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7"><span class="nav-text">v8简单调试技巧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v8%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-text">v8的数据结构</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
