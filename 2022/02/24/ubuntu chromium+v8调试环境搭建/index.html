@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="fa1lr4in">
+    
+    <title>
+        
+        fa1lr4in&#39;s blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"fa1lr4in.github.io","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"每天都要进步吖~"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                fa1lr4in&#39;s blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation"></span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">fa1lr4in</span>
+                        
+                            <span class="author-label">Lv1</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-02-24 17:56:28</span>
+        <span class="mobile">2022-02-24 17:56</span>
+    </span>
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.9k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>8 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="ubuntu-chromium-v8调试环境搭建"><a href="#ubuntu-chromium-v8调试环境搭建" class="headerlink" title="ubuntu chromium+v8调试环境搭建"></a>ubuntu chromium+v8调试环境搭建</h1><h2 id="Ubuntu环境配置"><a href="#Ubuntu环境配置" class="headerlink" title="Ubuntu环境配置"></a>Ubuntu环境配置</h2><p>1、允许root登录并进行ubuntu初始修改</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd root</span><br><span class="line">cp /home/ubuntu/.bashrc /root/</span><br><span class="line">apt update &amp;&amp; apt install ssh vim python git libproxy-tools re2c g++</span><br><span class="line">vi /etc/ssh/sshd_config			<span class="comment"># 修改 PermitRootLogin yes</span></span><br><span class="line">vi /etc/pam.d/gdm-autologin		<span class="comment"># 注释auth   required        pam_succeed_if.so user != root quiet_success</span></span><br><span class="line">vi /etc/pam.d/gdm-password		<span class="comment"># 注释auth   required        pam_succeed_if.so user != root quiet_success</span></span><br><span class="line">vi /root/.profile			    <span class="comment"># 改成 tty -s &amp;&amp; mesg n || true</span></span><br></pre></td></tr></table></figure>
+
+<p><del>2、配置linux全局代理，使终端可以访问墙外的v8编译相关资源</del></p>
+<p><del>比如qv2ray，相关链接：<a class="link"   target="_blank" rel="noopener" href="https://www.zsxcool.com/7137.html" >https://www.zsxcool.com/7137.html<i class="fas fa-external-link-alt"></i></a></del></p>
+<p><del>再比如Trojan-QT5，相关链接：<a class="link"   target="_blank" rel="noopener" href="https://github.com/Shadowsocks-Wiki/shadowsocks/blob/master/zh_CN/trojan/ubuntu-trojan-qt5-setup-guide.md" >https://github.com/Shadowsocks-Wiki/shadowsocks/blob/master/zh_CN/trojan/ubuntu-trojan-qt5-setup-guide.md<i class="fas fa-external-link-alt"></i></a></del></p>
+<p>2、一般采用虚拟机搭建v8环境，方便环境的维护，推荐虚拟机采用vmware NAT那块网卡，这时我们在本地做全局代理时（比如Netch），虚拟机内部也可以有比较顺畅的网络环境。</p>
+<h2 id="v8环境配置"><a href="#v8环境配置" class="headerlink" title="v8环境配置"></a>v8环境配置</h2><p>下载depot_tools，v8并进行编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">mkdir /root/tools &amp;&amp; <span class="built_in">cd</span> /root/tools</span><br><span class="line">git <span class="built_in">clone</span> https://chromium.googlesource.com/chromium/tools/depot_tools.git /root/tools/depot_tools</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=$PATH:&quot;/root/tools/depot_tools&quot;&#x27;</span> &gt;&gt; /etc/profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=$PATH:&quot;/root/tools/depot_tools&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc或者<span class="built_in">source</span> ~/.zshrc</span><br><span class="line"><span class="comment"># Todo 忘记是否需要自行安装Ninja了。。。</span></span><br><span class="line">mkdir /root/v8 &amp;&amp; <span class="built_in">cd</span> /root/v8</span><br><span class="line">fetch v8						 	  <span class="comment"># 这个可能会花很长时间，取决于个人的网络环境，如果中断了则 gclient sync同步</span></span><br><span class="line"><span class="built_in">cd</span> v8</span><br><span class="line"><span class="comment"># git reset --hard [commit hash]			# 切换版本，后面跟上commit的hash值，可选</span></span><br><span class="line"><span class="comment"># gclient sync</span></span><br><span class="line">sudo ./build/install-build-deps.sh --no-chromeos-fonts			<span class="comment"># 在linux系统中这个命令是需要的</span></span><br><span class="line">gclient sync  <span class="comment"># 同步更新</span></span><br><span class="line"><span class="comment"># 编译可执行文件</span></span><br><span class="line">tools/dev/gm.py x64.debug <span class="comment"># 编译 debug 版本			编译的过程可能会花上比较长的时间</span></span><br><span class="line">tools/dev/gm.py x64.release <span class="comment"># 编译 release 版本</span></span><br><span class="line"><span class="comment"># 或通过gn构建，方便我们自定义参数，比如下面加入了asan检测和afl支持，传统的afl fuzz整个程序（d8）很难会有产出，如果非要用afl可以自行编写harness，类似libfuzzer</span></span><br><span class="line">gn gen out/use_afl --args=<span class="string">&quot;is_debug=true is_component_build=true is_asan = true use_afl = true optimize_for_fuzzing = true&quot;</span></span><br><span class="line">ninja -C out/use_afl d8</span><br></pre></td></tr></table></figure>
+
+<p><strong>过程中遇到的问题</strong></p>
+<p>1、running depot tools as root is sad</p>
+<p>如果root用户使用该工具会弹出该警告，无视即可</p>
+<p>2、遇到 NOTICE: You have PROXY values set in your environment, but gsutilin depot_tools does not (yet) obey them.<br>Also, –no_auth prevents the normal BOTO_CONFIG environmentvariable from being used.<br>To use a proxy in this situation, please supply those settingsin a .boto file pointed to by the NO_AUTH_BOTO_CONFIG environmentvariable.</p>
+<p>缺少代理的环境变量，基本在你自己在虚拟机内布置代理环境才会出现这个问题，采用NAT网卡一般不会出现这个问题，踩太多坑了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mkdir /root/tools/.boto</span><br><span class="line">vi .boto</span><br><span class="line"><span class="comment"># [Boto]</span></span><br><span class="line"><span class="comment"># debug = 0</span></span><br><span class="line"><span class="comment"># num_retries = 10</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment"># proxy = 127.0.0.1</span></span><br><span class="line"><span class="comment"># proxy_port = 58591</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export NO_AUTH_BOTO_CONFIG=&quot;/root/tools/.boto&quot;&#x27;</span> &gt;&gt; /etc/profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export NO_AUTH_BOTO_CONFIG=&quot;/root/tools/.boto&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc或者<span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>3、Failed to download <a class="link"   target="_blank" rel="noopener" href="https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/43a87bbebccad99325fdcf34166295b121ee15c7/debian_sid_amd64_sysroot.tar.xz" >https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/43a87bbebccad99325fdcf34166295b121ee15c7/debian_sid_amd64_sysroot.tar.xz<i class="fas fa-external-link-alt"></i></a><br>Error: Command ‘vpython build/linux/sysroot_scripts/install-sysroot.py –arch=x64’ returned non-zero exit status 1 in /root/v8/v8</p>
+<p>出现这种问题是因为网络原因，可以重新进行gclient sync或更换代理服务器</p>
+<p>4、Error: client not configured; see ‘gclient config’</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># gclient config https://chromium.googlesource.com/chromium/src.git</span></span><br><span class="line">gclient config https://chromium.googlesource.com/v8/v8.git</span><br><span class="line">gclient runhooks</span><br></pre></td></tr></table></figure>
+
+<p>参考链接：<a class="link"   target="_blank" rel="noopener" href="https://stackoverflow.com/questions/8684282/gclient-runhooks-fails" >https://stackoverflow.com/questions/8684282/gclient-runhooks-fails<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="chromium环境配置"><a href="#chromium环境配置" class="headerlink" title="chromium环境配置"></a>chromium环境配置</h2><p>有了上面v8搭建的过程，这里的过程看起来就更容易理解一些，实际上二者的搭建过程没有太大的差距，因为google官方将搭建过程都封装到了depot_tools中了。二者的体量差别还是比较大的，截至2022.1，chromium最新大概5w多个文件，而v8在2k文件左右</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/chromium &amp;&amp; <span class="built_in">cd</span> ~/chromium</span><br><span class="line">fetch --nohooks chromium</span><br><span class="line"><span class="built_in">cd</span> src</span><br><span class="line">./build/install-build-deps.sh</span><br><span class="line">gclient runhooks</span><br><span class="line"><span class="comment"># git reset --hard [commit hash]			# 切换版本，后面跟上commit的hash值，可选</span></span><br><span class="line"><span class="comment"># gclient sync</span></span><br><span class="line"><span class="comment"># 配置编译选项，可以使用 use_afl = true 参数开启afl fuzz功能，但目前不知道如何结合afl对chromium进行fuzz，而且在不编写harness的情况下效率还是比较低的。</span></span><br><span class="line">gn gen out/asan_debug --args=<span class="string">&quot;is_debug=true is_component_build=true is_asan = true&quot;</span> 	</span><br><span class="line"><span class="comment"># 开始编译，可能需要数个小时</span></span><br><span class="line">autoninja -C out/asan_debug chrome</span><br></pre></td></tr></table></figure>
+
+<p>启动chromium时，asan提示<code>odr-violation</code>报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># Kiprey @ Kipwn in /usr/class/chromium [14:19:24] C:1</span><br><span class="line">$ ./src/out/asan_debug/chrome</span><br><span class="line">=================================================================</span><br><span class="line">==189815==ERROR: AddressSanitizer: odr-violation (0x7f44b9504700):</span><br><span class="line">  [1] size=40 &#x27;vtable for media::VaapiDmaBufVideoFrameMapper&#x27; ../../media/gpu/vaapi/vaapi_dmabuf_video_frame_mapper.cc</span><br><span class="line">  [2] size=40 &#x27;vtable for media::VaapiDmaBufVideoFrameMapper&#x27; ../../media/gpu/vaapi/vaapi_dmabuf_video_frame_mapper.cc</span><br><span class="line">These globals were registered at these points:</span><br><span class="line">  [1]:</span><br><span class="line">    #0 0x55f8a95f810d in __asan_register_globals /b/s/w/ir/cache/builder/src/third_party/llvm/compiler-rt/lib/asan/asan_globals.cpp:360:3</span><br><span class="line">    #1 0x7f4471d6895b in asan.module_ctor (/usr/class/chromium/src/out/asan_debug/libservice.so+0x2b5595b)</span><br><span class="line"></span><br><span class="line">  [2]:</span><br><span class="line">    #0 0x55f8a95f810d in __asan_register_globals /b/s/w/ir/cache/builder/src/third_party/llvm/compiler-rt/lib/asan/asan_globals.cpp:360:3</span><br><span class="line">    #1 0x7f44b87abe7b in asan.module_ctor (/usr/class/chromium/src/out/asan_debug/libmedia_gpu.so+0x335e7b)</span><br><span class="line"></span><br><span class="line">==189815==HINT: if you don&#x27;t care about these errors you may set ASAN_OPTIONS=detect_odr_violation=0</span><br><span class="line">SUMMARY: AddressSanitizer: odr-violation: global &#x27;vtable for media::VaapiDmaBufVideoFrameMapper&#x27; at ../../media/gpu/vaapi/vaapi_dmabuf_video_frame_mapper.cc</span><br><span class="line">==189815==ABORTING</span><br></pre></td></tr></table></figure>
+
+<p><code>odr-violation</code>这类错误我们忽略即可，因此我们需要设置一下环境变量<code>ASAN_OPTIONS</code>，最好编辑配置文件将其永久配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> ASAN_OPTIONS=detect_odr_violation=0</span><br></pre></td></tr></table></figure>
+
+<p>之后即可正常执行chrome。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a class="link"   target="_blank" rel="noopener" href="https://kiprey.github.io/2020/11/fetch-chromium/" >https://kiprey.github.io/2020/11/fetch-chromium/<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-252812-1.htm" >https://bbs.pediy.com/thread-252812-1.htm<i class="fas fa-external-link-alt"></i></a></li>
+<li><a href="browser-pwn-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.pdf">browser-pwn-基础知识.pdf</a> </li>
+</ol>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="1、vscode关闭代码错误提示"><a href="#1、vscode关闭代码错误提示" class="headerlink" title="1、vscode关闭代码错误提示"></a>1、vscode关闭代码错误提示</h3><p>vscode内Ctrl + Shift + P搜索：errorSquiggles，禁用错误波形曲线</p>
+<h3 id="2、配置gdb插件"><a href="#2、配置gdb插件" class="headerlink" title="2、配置gdb插件"></a>2、配置gdb插件</h3><p>下面可以挑选一个gdb调试工具，统一将gdb脚本的路径放入<code>/root/.gdbinit</code>中。</p>
+<h4 id="gef"><a href="#gef" class="headerlink" title="gef"></a>gef</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/hugsy/gef</span><br><span class="line"><span class="comment"># 将gef目录下的gef.py添加进/root/.gdbinit中，内容如下</span></span><br><span class="line"><span class="comment"># source /root/tools/gef/gef.py</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="pwndbg"><a href="#pwndbg" class="headerlink" title="pwndbg"></a>pwndbg</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/pwndbg/pwndbg</span><br><span class="line"><span class="built_in">cd</span> pwndbg</span><br><span class="line">sudo <span class="comment">#./setup.sh</span></span><br><span class="line"><span class="comment"># 如果显示异常，检查.gdbinit文件</span></span><br><span class="line"><span class="comment"># source /root/tools/pwndbg/gdbinit.py</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="peda"><a href="#peda" class="headerlink" title="peda"></a>peda</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/longld/peda.git ~/peda</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;source ~/peda/peda.py&quot;</span> &gt;&gt; ~/.gdbinit</span><br></pre></td></tr></table></figure>
+
+<p>还需要将v8的gdb插件放入gdbinit中，路径如下（路径取决于自己本机环境）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/root/v8/v8/tools/gdbinit</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="Windows-chromium-v8调试环境搭建"><a href="#Windows-chromium-v8调试环境搭建" class="headerlink" title="Windows chromium+v8调试环境搭建"></a>Windows chromium+v8调试环境搭建</h1><p>有了上面ubuntu安装的经验，再windows上搭建调试环境会轻松不少。</p>
+<p>windows里面需要额外安装SDK以及vs，毕竟需要vs进行调试。</p>
+<h2 id="v8环境配置-1"><a href="#v8环境配置-1" class="headerlink" title="v8环境配置"></a>v8环境配置</h2><p>1、下载安装vs2019或者vs2022，并配置python环境</p>
+<p>2、下载<a class="link"   target="_blank" rel="noopener" href="https://developer.microsoft.com/en-us/windows/downloads/sdk-archive/" >SDK<i class="fas fa-external-link-alt"></i></a>并安装</p>
+<p>3、下载安装<code>depot_tools</code>，并配置depot_tools安装目录的环境变量并确保其在python的环境变量前</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://chromium.googlesource.com/chromium/tools/depot_tools</span><br></pre></td></tr></table></figure>
+
+<p>4、配置环境变量</p>
+<p>三个环境变量，编译chromium也需要他们，depot_tools的环境变量要在python的上面（vs的路径按照自己电脑的路径）</p>
+<table>
+<thead>
+<tr>
+<th>DEPOT_TOOLS_WIN_TOOLCHAIN</th>
+<th><strong>vs2022_install</strong></th>
+<th><strong>PATH</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>C:\Program Files\Microsoft Visual Studio\2022\Community</td>
+<td>C:\software\depot_tools</td>
+</tr>
+</tbody></table>
+<p>5、运行gclient，初始化工具</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gclient</span><br></pre></td></tr></table></figure>
+
+<p>6、fetch源码并更新，其他的步骤就和ubuntu的一样了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir v8 &amp;&amp; <span class="built_in">cd</span> v8</span><br><span class="line">fetch v8</span><br><span class="line">gclient sync</span><br><span class="line"><span class="built_in">cd</span> v8</span><br><span class="line">python tools\dev\gm.py x64.debug</span><br></pre></td></tr></table></figure>
+
+<p>如果不使用gm.py脚本，也可以使用gn工具进行构建</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd E:\v8\v8</span><br><span class="line">gn gen --ide=vs out\default --args=&quot;is_component_build = true is_debug = true v8_optimized_debug = false&quot;</span><br></pre></td></tr></table></figure>
+
+<p>上面的命令会生成工作目录，路径为E:\v8\v8\out\Default，里面有一个all.sln的文件，使用vs打开</p>
+<p>之后在160个项目中找到gn_all，编译之，最后即可调试E:\v8\v8\out\Default\d8.exe。</p>
+<h2 id="chromium环境配置-1"><a href="#chromium环境配置-1" class="headerlink" title="chromium环境配置"></a>chromium环境配置</h2><p>配置vs和SDK还有环境变量等过程和上面配置v8时一致，只是在最后fetch和编译时有些许差别</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir chromium &amp;&amp; <span class="built_in">cd</span> chromium</span><br><span class="line">fetch chromium</span><br><span class="line"><span class="built_in">cd</span> src</span><br><span class="line">gn gen out/debug_comp --args=<span class="string">&quot;is_debug=true is_component_build=true&quot;</span> </span><br><span class="line">autoninja -C out/debug_comp chrome</span><br></pre></td></tr></table></figure>
+
+<p>或者使用vs进行编译调试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gn gen --ide=vs out\debug_by_vs --args=&quot;is_component_build = true is_debug = true v8_optimized_debug = false&quot;</span><br></pre></td></tr></table></figure>
+
+<p>最后找到gn_all，编译之，最终得到可执行文件。</p>
+<h2 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h2><p><a class="link"   target="_blank" rel="noopener" href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/windows_build_instructions.md#Setting-up-Windows" >https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/windows_build_instructions.md#Setting-up-Windows<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/HermitSun/article/details/106091018" >https://blog.csdn.net/HermitSun/article/details/106091018<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/253048" >https://www.anquanke.com/post/id/253048<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/12/09/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95%E4%B8%8E%E5%AE%9E%E7%8E%B0/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">垃圾回收算法与实现</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script 
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script >
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: 'oP8c99sduOuJjyeVoKafuweh-gzGzoHsz',
+                    appKey: 'TwXXvHbKxF0DVsXV22S2uRVG',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '欢迎大家吐槽~',
+                    lang: 'en'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'fa1lr4in';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('false') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">fa1lr4in</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ubuntu-chromium-v8%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">ubuntu chromium+v8调试环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">Ubuntu环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">v8环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chromium%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">chromium环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81vscode%E5%85%B3%E9%97%AD%E4%BB%A3%E7%A0%81%E9%94%99%E8%AF%AF%E6%8F%90%E7%A4%BA"><span class="nav-text">1、vscode关闭代码错误提示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E9%85%8D%E7%BD%AEgdb%E6%8F%92%E4%BB%B6"><span class="nav-text">2、配置gdb插件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gef"><span class="nav-text">gef</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pwndbg"><span class="nav-text">pwndbg</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#peda"><span class="nav-text">peda</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-chromium-v8%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">Windows chromium+v8调试环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#v8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-1"><span class="nav-text">v8环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chromium%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-1"><span class="nav-text">chromium环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0%EF%BC%9A"><span class="nav-text">参考文章：</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
