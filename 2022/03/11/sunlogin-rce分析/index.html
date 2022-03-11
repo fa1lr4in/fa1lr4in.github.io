@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="fa1lr4in">
+    
+    <title>
+        
+            sunlogin rce分析 |
+        
+        fa1lr4in&#39;s blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"fa1lr4in.github.io","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"每天都要进步吖~"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                fa1lr4in&#39;s blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">sunlogin rce分析</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">fa1lr4in</span>
+                        
+                            <span class="author-label">Lv1</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-03-11 10:39:43</span>
+        <span class="mobile">2022-03-11 10:39</span>
+    </span>
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>2.1k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>7 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="sunloginl-rce漏洞分析"><a href="#sunloginl-rce漏洞分析" class="headerlink" title="sunloginl rce漏洞分析"></a>sunloginl rce漏洞分析</h1><p>首先分析二进制文件，拖入ida</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220304114927894.png" alt="image-20220304114927894"></p>
+<p>发现被加壳，die（detect it easy）查壳发现是upx，使用github官方的upx最新版脱壳即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">upx -d xxx.exe</span><br></pre></td></tr></table></figure>
+
+<p>注意最新的工具脱壳后无法直接执行，应该是upx在加壳的过程中将基址存在了某个寄存器或内存中，而脱壳过程中将这段代码删除了，导致无法找到对应的基址。</p>
+<p>但是可以拖入ida进行分析</p>
+<p>脱壳后拖入ida进行分析，脱壳后针对于SunloginClient_11.0.0.33162_X64文件关键函数偏移为0xE1D0DE，和start函数的offset为0x2DAFDE</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220304142949397.png" alt="image-20220304142949397"></p>
+<p>verify-haras功能点为本次出现敏感信息泄露的关键功能，下面根据补丁对比看下实际功能</p>
+<h2 id="补丁对比"><a href="#补丁对比" class="headerlink" title="补丁对比"></a>补丁对比</h2><p>查看补丁前和补丁后泄露CID的接口，其中<code>sub_1400F0690</code>函数用于http response</p>
+<p>补丁前</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220218103439485.png" alt="image-20220218103439485"></p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220218104348197.png" alt="image-20220218104348197"></p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220218103647874.png" alt="image-20220218103647874"></p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220218104104984.png" alt="image-20220218104104984"></p>
+<p>补丁后将相关的功能点删除了</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220218103941374.png" alt="image-20220218103941374"></p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220218104144818.png" alt="image-20220218104144818"></p>
+<h2 id="信息泄露"><a href="#信息泄露" class="headerlink" title="信息泄露"></a>信息泄露</h2><p>这里我将详细的调试以及跟踪过程都放入了文章，方便感兴趣的小伙伴自己调试复现，说不定会发现惊喜。</p>
+<p>由于脱壳后程序无法执行，所以笔者采用了带壳调试的方式，调试方式为首先运行待调试程序，然后找到开放端口的向日葵进程，之后attach入该进程即可调试。</p>
+<p>具体做法就是通过esp定律定位到oep，之后通过相对偏移在关键位置下断点，而带壳调试有两个比较麻烦的点，一是定位关键代码相对来说困难一些，二是无法观察函数调用栈，因为都是在壳函数中完成的所有操作。</p>
+<p>上面已经得出，我个人的SunloginClient_11.0.0.33162_X64文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lea     rdx, aVerifyHaras ; &quot;verify-haras&quot;</span><br></pre></td></tr></table></figure>
+
+<p>偏移为0xE1D0DE，和start函数的offset为0x2DAFDE，所以根据偏移在动态调试时下硬件断点（软件断点无法跟入到该代码处，暂时不清楚原因），之后保持向日葵在运行状态，之后浏览器访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://ip:port/cgi-bin/rpc?action=verify-haras</span><br></pre></td></tr></table></figure>
+
+<p>程序将会断在上述指令处。</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220307092335122.png" alt="image-20220307092335122"></p>
+<p>之后单步执行，观察函数传入的参数，rcx与rdx均为<code>verify-haras</code>。</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220307092731581.png" alt="image-20220307092731581"></p>
+<p>之后调用了函数，返回值为<code>&quot;dmPqDgSa8jOYgp1Iu1U7l1HbRTVJwZL3&quot;</code>，暂时不清楚该字符串代表什么含义，也不清楚不同次的执行该字符串是否会变化</p>
+<p> <img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220307101428510.png" alt="image-20220307101428510"></p>
+<p>之后调用函数将两个字符串拼接，查看返回值（也就是rax寄存器）证实了我们的猜想。这时我们可以解决刚刚的疑惑，也就是说第二个字符串就是CID（但是这里我们已经知道漏洞详情从而分析漏洞，如果没有知道漏洞详情，那么该漏洞的挖掘就是一门技术活了）。</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220307103855751.png" alt="image-20220307103855751"></p>
+<p>之后相应包中就带上了CID相关的信息</p>
+<p>这时候我们比较好奇，为什么要拼接这样的get请求来达到信息泄露的目的呢，通过ida查看该函数的交叉引用（下面对应的解释以及注释均为笔者根据调试自己的漏洞环境得出的结论，详细的调试过程就不贴出了）</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220309095920800.png" alt="image-20220309095920800"></p>
+<p>可以看到验证了cgi-bin/rpc的接口，向上查看，发现还有</p>
+<blockquote>
+<p>login.cgi</p>
+<p>cgi-bin/login.cgi</p>
+<p>express_login</p>
+<p>desktop.list</p>
+<p>cloudconfig</p>
+<p>transfer</p>
+<p>micro-live/enable</p>
+<p>check</p>
+<p>getfastcode</p>
+<p>assist</p>
+<p>projection</p>
+<p>getaddress</p>
+</blockquote>
+<p>在查找字符串的时候也发现了对应的注册，上面图片里面的逻辑其实就是449行对应的函数</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220309101030290.png" alt="image-20220309101030290"></p>
+<p>这时我们向下找，在该函数中，我们可以看到在处理action时，通过第266行获得了action的参数值并放入action_parameter变量中。</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220309101640062.png" alt="image-20220309101640062"></p>
+<p>接下来拿获取到的参数值与字符串<code>verify-haras</code>做对比，如果匹配，则进入if逻辑，很显然，我们构造的action的参数值就是<code>verify-haras</code>，进入if逻辑后，if里面的Src存放了http的响应包，这里第398行调用了函数来生成一串随机字符串，该随机字符串就是CID，最后将拼接后的Src返回给用户，即泄露了CID（注意这里的CID是每次请求都会变化的）。</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220309101954543.png" alt="image-20220309101954543"></p>
+<p>可以看下403行对应释放内存的逻辑，14行将原来索引到CID对应内存的指针的最后一位置为0，所以通过偏移是可能索引到被释放的内存的，有引发内存错误的风险，</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220309102736358.png" alt="image-20220309102736358"></p>
+<h2 id="调试tips"><a href="#调试tips" class="headerlink" title="调试tips"></a>调试tips</h2><p>在字符串ida字符串搜索时看到了很多带有cgi-bin/rpc对应的关键字，比如</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220309104405136.png" alt="image-20220309104405136"></p>
+<p>比如</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220309104435867.png" alt="image-20220309104435867"></p>
+<p>还比如</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220309104504014.png" alt="image-20220309104504014"></p>
+<p>具体定位方式实际上就是给每个cgi-bin/rpc的位置处下断点，简单有效，实际上动态调试的目的也在于此，当某个变量的含义不确定或者判断某段代码是否会执行，或者调试exp时观察是否会执行对应逻辑都很有效果。</p>
+<p>还有需要注意的一点</p>
+<p>调试程序时如果出现派生进程以及多线程，一定要attach对应的漏洞进程，否则可能无法断在断点处。多线程调试时如果只关注某个功能点，可以将其他进程暂时挂起（比如这里的cgi-bin）.</p>
+<p>ida_verify_haras:    140E1D0DE</p>
+<p>ida_action：           140E1CC51</p>
+<p>1： 140594909        88 87D5</p>
+<p>2： 140595253        887e8b</p>
+<p>3： 140E2173E        4660</p>
+<p>debug_verify_haras：    00007FF76698D0DE</p>
+<p>1： 7FF7 6610 4909</p>
+<p>2： 7FF7 6610 5253</p>
+<p>3： 7FF7 6699 173E        yes</p>
+<h2 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h2><p>上面已经统计了开放的接口，直接找check对应的处理函数</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220309114647966.png" alt="image-20220309114647966"></p>
+<p>跟进246行，在处理cmd参数时，比对了两个参数值ping和nslookup</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220309114827874.png" alt="image-20220309114827874"></p>
+<p>而这两个参数值存在rce漏洞</p>
+<p>ida_cmd_parameter：    140E1B905</p>
+<p>之后执行了167行的逻辑</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220309175934721.png" alt="image-20220309175934721"></p>
+<p>调用了CreateProcess执行了传入的命令</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220309180023753.png" alt="image-20220309180023753"></p>
+<p>调试可以明显观察到执行了CreateProcessA进程</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220309153341313.png" alt="image-20220309153341313"></p>
+<p>执行ReadFile后，将执行后的结果放入Buffer指向的内存中了。</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220309155222492.png" alt="image-20220309155222492"></p>
+<p>这时有一个问题，既然直接给ping或nslookup传递拼接的命令就可以执行任意代码，那为什么要在cookie中传入CID呢。cookie中的CID的作用是什么呢，我们在函数中没有看到对应的校验逻辑，下面的图就是执行代码的逻辑，可以看到只有v21是个类似于校验的值，但仔细分析发现，v21只可以判断参数名称是否为<code>ping</code>或<code>nslookup</code>。</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220310110455058.png" alt="image-20220310110455058"></p>
+<p>笔者在复现的时候走了些许弯路，尝试了寻找CID、cookie对应的字符串，发现没有在任何一处断点断下。</p>
+<p>这里有一个比较坑的一点在于：ida的shift+f12并不能发现所有注册的字符串，有些明显的字符串形式并没有被shift+f12统计到，所以我们在分析代码逻辑时不要过度依赖于shift+f12的功能（比如在查找<code>cgi-bin/rpc</code>字符串时，shift+f12就没有统计到关键代码位置）</p>
+<p>最后通过错误信息定位到CID校验点</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220310111805487.png" alt="image-20220310111805487"></p>
+<p>通过流量可以发现，当我们不传入CID时，response body返回了报错信息，这时我们通过这个报错信息到ida中查找</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220310111917581.png" alt="image-20220310111917581"></p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220310111931612.png" alt="image-20220310111931612"></p>
+<p>将上面两个函数对应报错位置处下断点，很容易发现实际上是第二个函数做了校验</p>
+<p>下面是不断尝试所得到的数据=(</p>
+<blockquote>
+<p>ida_verify_haras:    140E1D0DE        </p>
+<p>ida_cid_1：            1409F5BF1        -42 74ED</p>
+<p>ida_cid_2：            140204F9A        -C1 8144</p>
+<p>ida_cid_3：            140112979        -D0 A765</p>
+<p>ida_cid_4：            140E209B8        38DA</p>
+<p>debug_verify_haras：    00007FF76698D0DE</p>
+<p>debug_cid_1：            7FF7 6656 5BF1        -42 74ED</p>
+<p>debug_cid_2：            7FF7 65D7 4F9A        -C1 8144</p>
+<p>debug_cid_3：            7FF7 65C8 2979        -D0 A765</p>
+<p>debug_cid_4：            7FF7 6699 09B8        38DA</p>
+<p>ida_verify_haras:    140E1D0DE</p>
+<p>ida_cookie_1：            140204F3F        -C1 819F</p>
+<p>ida_cookie_2：            14057F7D8        -89 D906</p>
+<p>ida_cookie_3：            1409F4A60        -42 867E</p>
+<p>ida_cookie_4：            140111141         -D0 BF9D</p>
+<p>ida_cookie_5：            14014D5AA        -CC FB34</p>
+<p>debug_verify_haras：    00007FF7142ED0DE</p>
+<p>debug_cookie_1：            7FF7 136D 4F3F</p>
+<p>debug_cookie_2：            7FF7 13A4 F7D8</p>
+<p>debug_cookie_3：            7FF7 13EC 4A60</p>
+<p>debug_cookie_4：            7FF7 135E 1141</p>
+<p>debug_cookie_5：            7FF7 1361 D5AA</p>
+<p>ida_verify_haras:    140E1D0DE</p>
+<p>ida_verification_failture_1:        14020528F            C1 7E4F</p>
+<p>ida_verification_failture_2:        140E13659            9A85</p>
+<p>debug_verify_haras：    00007FF7142ED0DE</p>
+<p>debug_verification_failture_1:        7FF7 136D 528F</p>
+<p>debug_verification_failture_2:        7FF7 142E 3659        yes</p>
+</blockquote>
+<p>最终定位到了在该位置处做了校验，如果CID检验失败，则返回红框中的报错信息</p>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220310112401244.png" alt="image-20220310112401244"></p>
+<p>校验逻辑的反汇编代码如下，通过计算相对便宜即可在ida中定位到，具体的校验逻辑感兴趣的小伙伴可以进行分析</p>
+<blockquote>
+<p>00007FF7142ED0DE</p>
+<p>00007FF7142D6470        1 6C6E</p>
+</blockquote>
+<p><img src="/2022/03/11/sunlogin-rce%E5%88%86%E6%9E%90/image-20220310154208929.png" alt="image-20220310154208929"></p>
+<h2 id="漏洞挖掘tips"><a href="#漏洞挖掘tips" class="headerlink" title="漏洞挖掘tips"></a>漏洞挖掘tips</h2><p>CreateProcessA等危险函数</p>
+<p>暴露的多个接口</p>
+<p>关键session（如CID）的信息泄露</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/zUotTe0/p/15913108.html" >https://www.cnblogs.com/zUotTe0/p/15913108.html<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/02/24/ubuntu-chromium-v8%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">ubuntu chromium+v8调试环境搭建</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script 
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script >
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: 'oP8c99sduOuJjyeVoKafuweh-gzGzoHsz',
+                    appKey: 'TwXXvHbKxF0DVsXV22S2uRVG',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '欢迎大家吐槽~',
+                    lang: 'en'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'fa1lr4in';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('false') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">fa1lr4in</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sunloginl-rce%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="nav-text">sunloginl rce漏洞分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E4%B8%81%E5%AF%B9%E6%AF%94"><span class="nav-text">补丁对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2"><span class="nav-text">信息泄露</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95tips"><span class="nav-text">调试tips</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C"><span class="nav-text">代码执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98tips"><span class="nav-text">漏洞挖掘tips</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
