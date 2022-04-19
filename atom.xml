@@ -6,7 +6,7 @@
   <link href="https://fa1lr4in.github.io/atom.xml" rel="self"/>
   
   <link href="https://fa1lr4in.github.io/"/>
-  <updated>2022-04-14T03:29:04.188Z</updated>
+  <updated>2022-04-19T07:01:23.226Z</updated>
   <id>https://fa1lr4in.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>gdb9.2源码安装以及相关插件安装</title>
+    <link href="https://fa1lr4in.github.io/2022/04/19/gdb9-2%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E7%9B%B8%E5%85%B3%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/"/>
+    <id>https://fa1lr4in.github.io/2022/04/19/gdb9-2%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E7%9B%B8%E5%85%B3%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/</id>
+    <published>2022-04-19T07:00:57.000Z</published>
+    <updated>2022-04-19T07:01:23.226Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Ubuntu源码安装gdb9-2以及gdb常用插件安装"><a href="#Ubuntu源码安装gdb9-2以及gdb常用插件安装" class="headerlink" title="Ubuntu源码安装gdb9.2以及gdb常用插件安装"></a>Ubuntu源码安装gdb9.2以及gdb常用插件安装</h1><h2 id="一、为什么要源码编译安装gdb"><a href="#一、为什么要源码编译安装gdb" class="headerlink" title="一、为什么要源码编译安装gdb"></a>一、为什么要源码编译安装gdb</h2><p>有时Ubuntu包管理器最新的gdb版本较老，在本人环境中为8.1.1，有bug影响了正常调试，故进行升级</p><h2 id="二、gdb安装"><a href="#二、gdb安装" class="headerlink" title="二、gdb安装"></a>二、gdb安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">apt remove gdb</span><br><span class="line">wget http://ftp.gnu.org/gnu/gdb/gdb-9.2.tar.gz</span><br><span class="line">tar xvf gdb-9.2.tar.gz</span><br><span class="line">mkdir build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">../configure --prefix=/root/tools/gdb --with-python=/usr/bin/python3<span class="comment">#这个路径随便指定，不过下面要用到，这个路径中存放编译生成的二进制文件</span></span><br><span class="line">make -j12</span><br><span class="line">make install</span><br><span class="line"><span class="built_in">export</span> PATH=/root/tools/gdb/bin:<span class="variable">$PATH</span></span><br><span class="line">ln -s /root/tools/gdb/bin/gdb /usr/bin/gdb</span><br></pre></td></tr></table></figure><h2 id="三、插件安装"><a href="#三、插件安装" class="headerlink" title="三、插件安装"></a>三、插件安装</h2><h3 id="gef"><a href="#gef" class="headerlink" title="gef"></a>gef</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/hugsy/gef</span><br><span class="line"><span class="comment"># 将gef目录下的gef.py添加进/root/.gdbinit中，内容如下</span></span><br><span class="line"><span class="comment"># source /root/tools/gef/gef.py</span></span><br></pre></td></tr></table></figure><h3 id="pwndbg"><a href="#pwndbg" class="headerlink" title="pwndbg"></a>pwndbg</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/pwndbg/pwndbg</span><br><span class="line"><span class="built_in">cd</span> pwndbg</span><br><span class="line">sudo <span class="comment">#./setup.sh</span></span><br><span class="line"><span class="comment"># 如果显示异常，检查.gdbinit文件</span></span><br><span class="line"><span class="comment"># source /root/tools/pwndbg/gdbinit.py</span></span><br></pre></td></tr></table></figure><h3 id="peda"><a href="#peda" class="headerlink" title="peda"></a>peda</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/longld/peda.git ~/peda</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;source ~/peda/peda.py&quot;</span> &gt;&gt; ~/.gdbinit</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Ubuntu源码安装gdb9-2以及gdb常用插件安装&quot;&gt;&lt;a href=&quot;#Ubuntu源码安装gdb9-2以及gdb常用插件安装&quot; class=&quot;headerlink&quot; title=&quot;Ubuntu源码安装gdb9.2以及gdb常用插件安装&quot;&gt;&lt;/a&gt;Ubunt</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>domato101</title>
