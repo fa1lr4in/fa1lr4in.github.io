@@ -2,7 +2,7 @@
 
 访问地址：https://fa1lr4in.github.io/demos/minimind.html
 
-入口：全站菜单中 ABOUT 后面的 DEMO，指向 https://fa1lr4in.github.io/demos/。
+入口：全站菜单中 ABOUT 前面的 DEMO（第五项），指向 https://fa1lr4in.github.io/demos/。
 
 实验标题：从零训练一个可对话的模型（基于MiniMind）六：从一句话到下一个词，拆开看 MiniMind 的计算过程配套实验
 
