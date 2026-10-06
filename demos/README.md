@@ -1,4 +1,4 @@
-# MiniMind 第六章交互演示
+# MiniMind 章节交互演示
 
 访问地址：https://fa1lr4in.github.io/demos/minimind/chapter-06.html
 
@@ -49,3 +49,17 @@
 实验按项目和章节命名：`demos/minimind/chapter-06.html` 对应 MiniMind 第六章，后续章节可使用 `chapter-07.html` 等名称，不需要覆盖第六章实验。
 
 旧地址 `/demos/minimind.html` 仅保留为静态跳转页，自动转到第六章新地址。之前分享的链接仍然可用；新文章和嵌入代码请使用新地址。在 Hexo 源项目中也应保留旧跳转页 `source/demos/minimind.html`，并原样复制实验列表 `source/demos/index.html`。
+
+## 第七章训练循环实验
+
+访问地址：https://fa1lr4in.github.io/demos/minimind/chapter-07.html
+
+实验标题：从零训练一个可对话的模型（基于MiniMind）七：从预测到学习，拆开看 MiniMind 的训练循环配套实验
+
+`minimind/chapter-07.html` 是自包含的静态网页，不需要 Python、GPU 或后端接口。支持 14 个步骤、播放/暂停、前后单步，以及刷新后恢复步骤（浏览器允许本地存储时）。入口仅放在 DEMO 实验列表，不加入首页、归档或文章列表；全站菜单顺序仍为 HOME、ARCHIVES、CATEGORIES、TAGS、DEMO、ABOUT。
+
+演示先接上第六章的手工预测，再切换到独立的单参数 SGD 实验：固定四维上下文向量 `[1, 0, 1, 0]`，只训练输出参数 `w`。更新后 `w` 从 0 变为约 0.2，苹果概率从约 33.33% 升到 37.92%，Loss 从约 1.0986 降到 0.9698。最后的梯度累积使用独立示例值，不是完整 MiniMind 模型的训练记录。
+
+若重新生成 Hexo 博客，还应把第七章网页复制到 `source/demos/minimind/chapter-07.html`，并同步更新 `source/demos/index.html`。继续使用已有的 `skip_render: demos/**/*` 配置条目。
+
+如需嵌入第七章文章，可沿用上面的 iframe 写法，将地址替换为 `/demos/minimind/chapter-07.html`，并将 title 替换为第七章实验标题。
