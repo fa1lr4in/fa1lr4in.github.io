@@ -234,6 +234,7 @@ KEEP.initLocalSearch = () => {
         // Remove loading animation
         const noResultDom = document.querySelector('#no-result');
         noResultDom && (noResultDom.innerHTML = '<i class="fas fa-search fa-5x"></i>');
+        inputEventFunction();
       });
   };
 
